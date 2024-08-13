@@ -1,4 +1,45 @@
+import os
 import numpy as np
+
+def get_settings(setting):
+    if setting == "simu1":
+        beta_list = np.arange(0, 1.01, 0.05)
+        num_seed = 1000
+        num_data = 1000
+        num_class = 2
+        topk = 1
+        num_bins_dim = 50
+        PATH = './result/simulation_setting1/'
+
+    if setting == "simu2":
+        beta_list = np.arange(0, 1.01, 0.05)
+        num_seed = 1000
+        num_data = 1000
+        num_class = 2
+        topk = 1
+        num_bins_dim = 50
+        PATH = './result/simulation_setting2/'
+
+    if setting == "simu3":
+        beta_list = np.arange(0, 0.1, 0.005)
+        num_seed = 1000
+        num_data = 1000
+        num_class = 10
+        topk = 2
+        num_bins_dim = 20
+        PATH = './result/simulation_setting3/'
+        
+    if not os.path.isdir(PATH):
+        try:
+            os.makedirs(PATH)
+        except OSError as exc:  # Python >2.5
+            if exc.errno == errno.EEXIST and os.path.isdir(PATH):
+                pass
+            else:
+                raise
+    return num_seed, num_data, num_class, topk, num_bins_dim, beta_list, PATH
+    
+
 
 def generate_simulation_data(setting, seed, num_data, num_class, topk, beta):
     np.random.seed(seed)
