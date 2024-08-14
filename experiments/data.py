@@ -48,7 +48,7 @@ def generate_simulation_data(setting, seed, num_data, num_class, topk, beta):
         Z = np.random.exponential(scale=1.0, size = [num_data, num_class])
         Z = (Z.transpose() / Z.sum(1)).transpose()
         # generate mis-calibrated model by logit transformation
-        beta0 = 1
+        beta0 = 0
         p = Z[:, 0]
         exponent = beta0 + beta * np.log(p / (1-p))
         q = np.exp(exponent) / (1 + np.exp(exponent))
@@ -67,7 +67,7 @@ def generate_simulation_data(setting, seed, num_data, num_class, topk, beta):
         Z[:, 0] = Z[(np.arange(num_data), top1_prob_label)]
         Z[(np.arange(num_data), top1_prob_label)] = top1_prob
         # generate mis-calibrated model by logit transformation
-        beta0 = 1
+        beta0 = 0
         p = Z[:, 0]
         exponent = beta0 + beta * np.log(p / (1-p))
         q = np.exp(exponent) / (1 + np.exp(exponent))

@@ -18,9 +18,12 @@ def main():
     num_seed, num_data, num_class, topk, num_bins_dim, beta_list, PATH = get_settings(setting)
     
     for beta in beta_list:
-        subsample_statistic_list = np.zeros([num_seed, num_subsample])
+        subsample_statistic_list = np.zeros([num_seed, num_subsample + 1])
         for seed in range(num_seed):
             Z_topk_orig, Y_topk_orig = generate_simulation_data(setting, seed, num_data, num_class, topk, beta)
+            clt_statistic, _ = T_mn_estimator(Y_topk_orig, Z_topk_orig, num_bins_dim, topk)
+            subsample_statistic_list[seed, -1] = clt_statistic
+            
             data_index = np.arange(num_data)
             subample_size = int(np.floor(np.sqrt(num_data)))
             
